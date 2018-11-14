@@ -1,3 +1,3 @@
-import '../styles/index.scss';
+import '../styles/index.styl';
 
 console.log('webpack starterkit');

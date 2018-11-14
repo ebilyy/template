@@ -1,17 +1,19 @@
 const Path = require('path');
-// const pages = require( './pages.js');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-const pages = require( './pages.js');
+const pages = requireUncached( './pages.js');
 
+function requireUncached(module){
+  delete require.cache[require.resolve(module)];
+  return require(module);
+}
 
 module.exports = {
   entry: {
     app: Path.resolve(__dirname, '../src/scripts/index.js')
   },
   output: {
-    path: Path.join(__dirname, '../build'),
+    path: Path.join(__dirname, '../dist'),
     filename: 'js/[name].js'
   },
   optimization: {
@@ -21,13 +23,10 @@ module.exports = {
     }
   },
   plugins: [
-    new CleanWebpackPlugin(['build'], { root: Path.resolve(__dirname, '..') }),
+    new CleanWebpackPlugin(['dist'], { root: Path.resolve(__dirname, '..') }),
     new CopyWebpackPlugin([
       { from: Path.resolve(__dirname, '../public'), to: 'public' }
     ]),
-    // new HtmlWebpackPlugin({
-    //   template: Path.resolve(__dirname, '../src/index.html')
-    // })
     ...pages
   ],
   resolve: {

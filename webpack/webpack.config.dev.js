@@ -45,8 +45,18 @@ module.exports = merge(common, {
         loader: 'babel-loader'
       },
       {
-        test: /\.s?css$/i,
-        use: ['style-loader', 'css-loader?sourceMap=true', 'sass-loader']
+        test: /\.styl$/,
+        use: [
+          {
+            loader: "style-loader" // creates style nodes from JS strings
+          },
+          {
+            loader: "css-loader" // translates CSS into CommonJS
+          },
+          {
+            loader: "stylus-loader" // compiles Stylus to CSS
+          }
+        ]
       }
     ]
   }

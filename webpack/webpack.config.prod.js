@@ -3,15 +3,17 @@ const Webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./webpack.common.js');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-function requireUncached(module){
+function requireUncached(module) {
   delete require.cache[require.resolve(module)];
   return require(module);
 }
 
-const pages = requireUncached( './pages.js');
+const pages = requireUncached('./pages.js');
 
 module.exports = merge(common, {
+
   mode: 'production',
   devtool: 'source-map',
   stats: 'errors-only',
@@ -28,7 +30,7 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: 'bundle.css'
     }),
-    ...pages
+    // ...pages
   ],
   module: {
     rules: [
@@ -38,13 +40,28 @@ module.exports = merge(common, {
         use: 'babel-loader'
       },
       {
-        test: /\.s?css/i,
-        use : [
+        test: /\.styl$/,
+        use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
+          {
+            loader: "css-loader",
+            options: {
+              minimize: {
+                safe: true
+
+              }
+            }
+          },
+          'postcss-loader',
+          "stylus-loader" // compiles Stylus to CSS
         ]
       }
     ]
-  }
+  },
+  optimization: {
+    minimizer: [
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
 });
+
