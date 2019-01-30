@@ -51,6 +51,10 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0"
+    "@babel/polyfill": "^7.0.0",
+    "html-loader": "^0.5.5",
+    "nunjucks": "^3.1.7",
+    "nunjucks-html-loader": "^1.1.0",
+    "nunjucks-webpack-plugin": "^5.0.0"
   }
 }

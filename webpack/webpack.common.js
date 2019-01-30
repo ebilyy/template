@@ -1,7 +1,7 @@
 const Path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const pages = requireUncached( './pages.js');
+const pages = requireUncached( './html.js');
 
 function requireUncached(module){
   delete require.cache[require.resolve(module)];
@@ -42,6 +42,16 @@ module.exports = {
         type: 'javascript/auto'
       },
       {
+        test: /\.(html)$/,
+        exclude : /node_modules/,
+        use: {
+            loader: 'html-loader',
+            options: {
+                attrs: [':data-src']
+            }
+        }
+    },
+      {
         test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
         use: {
           loader: 'file-loader',
@@ -50,6 +60,7 @@ module.exports = {
           }
         }
       },
+      
     ]
   }
 };

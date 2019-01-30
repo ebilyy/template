@@ -3,12 +3,12 @@ const Webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
-function requireUncached(module){
+function requireUncached(module) {
   delete require.cache[require.resolve(module)];
   return require(module);
 }
 
-const pages = requireUncached('./pages.js');
+const pages = requireUncached('./html.js');
 
 const dest = Path.join(__dirname, '../dist');
 
@@ -57,7 +57,24 @@ module.exports = merge(common, {
             loader: "stylus-loader" // compiles Stylus to CSS
           }
         ]
-      }
+      },
+      // {
+      //   test: /\.html$|njk|nunjucks/,
+      //   use: ['html-loader', {
+      //     loader: 'nunjucks-html-loader',
+      //     options: {
+      //       // Other super important. This will be the base
+      //       // directory in which webpack is going to find
+      //       // the layout and any other file index.njk is calling.
+      //       minimize: false,
+      //       minifyJS: true,
+      //       minifyCSS: true,
+      //       collapseWhitespace: false,
+      //       searchPaths: ['./src/templates'],
+      //       root: dest,
+      //     }
+      //   }]
+      // },
     ]
   }
 });
