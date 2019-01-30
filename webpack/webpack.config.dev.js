@@ -58,23 +58,17 @@ module.exports = merge(common, {
           }
         ]
       },
-      // {
-      //   test: /\.html$|njk|nunjucks/,
-      //   use: ['html-loader', {
-      //     loader: 'nunjucks-html-loader',
-      //     options: {
-      //       // Other super important. This will be the base
-      //       // directory in which webpack is going to find
-      //       // the layout and any other file index.njk is calling.
-      //       minimize: false,
-      //       minifyJS: true,
-      //       minifyCSS: true,
-      //       collapseWhitespace: false,
-      //       searchPaths: ['./src/templates'],
-      //       root: dest,
-      //     }
-      //   }]
-      // },
+      {
+        test: /\.njk$/,
+        use: [
+          {
+            loader: 'nunjucks-isomorphic-loader',
+            query: {
+              root: [Path.resolve(__dirname, '../src/templates')]
+            }
+          }
+        ]
+      }
     ]
   }
 });
