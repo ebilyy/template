@@ -14,6 +14,8 @@ const src = Path.join(__dirname, '../src');
 // });
 
 
+
+
 const pages = ['index', 'page'];
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
